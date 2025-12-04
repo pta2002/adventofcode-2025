@@ -39,6 +39,12 @@ struct aoc: ParsableCommand {
                 print("Part 1: \(day3.part1)")
                 print("Part 2: \(day3.part2)")
             }
+        case 4:
+            do {
+                let day4 = Day4(input: input)
+                print("Part 1: \(day4.part1)")
+                print("Part 2: \(day4.part2)")
+            }
         default: fatalError("Not implemented")
         }
     }
