@@ -1,10 +1,11 @@
-// The Swift Programming Language
-// https://docs.swift.org/swift-book
-//
-// Swift Argument Parser
-// https://swiftpackageindex.com/apple/swift-argument-parser/documentation
-
 import ArgumentParser
+
+protocol Day {
+    init(input: String)
+
+    var part1: Int { get }
+    var part2: Int { get }
+}
 
 @main
 struct aoc: ParsableCommand {
@@ -15,55 +16,27 @@ struct aoc: ParsableCommand {
     var day: Int
 
     mutating func run() throws {
+        let days: [Int: Day.Type] = [
+            1: Day1.self,
+            2: Day2.self,
+            3: Day3.self,
+            4: Day4.self,
+            5: Day5.self,
+            6: Day6.self,
+            7: Day7.self,
+        ]
+
         let inputPath =
             "Inputs/day\(String(format: "%02d", self.day))\(self.useSample ? "-sample" : "").txt"
         let input = try String(contentsOfFile: inputPath, encoding: .utf8)
 
-        switch self.day {
-        case 1:
-            do {
-                let day1 = Day1()
-                let input1 = try day1.parse(input: input)
-                print("Part 1: \(day1.part1(input: input1))")
-                print("Part 2: \(day1.part2(input: input1))")
-            }
-        case 2:
-            do {
-                let day2 = Day2(input: input)
-                print("Part 1: \(day2.part1)")
-                print("Part 2: \(day2.part2)")
-            }
-        case 3:
-            do {
-                let day3 = Day3(input: input)
-                print("Part 1: \(day3.part1)")
-                print("Part 2: \(day3.part2)")
-            }
-        case 4:
-            do {
-                let day4 = Day4(input: input)
-                print("Part 1: \(day4.part1)")
-                print("Part 2: \(day4.part2)")
-            }
-        case 5:
-            do {
-                let day5 = Day5(input: input)
-                print("Part 1: \(day5.part1)")
-                print("Part 2: \(day5.part2)")
-            }
-        case 6:
-            do {
-                let day6 = Day6(input: input)
-                print("Part 1: \(day6.part1)")
-                print("Part 2: \(day6.part2)")
-            }
-        case 7:
-            do {
-                let day7 = Day7(input: input)
-                print("Part 1: \(day7.part1)")
-                print("Part 2: \(day7.part2)")
-            }
-        default: fatalError("Not implemented")
+        guard let dayClass = days[self.day] else {
+            print("Not yet implemented")
+            return
         }
+
+        let dayRunner = dayClass.init(input: input)
+        print("Part 1: \(dayRunner.part1)")
+        print("Part 2: \(dayRunner.part2)")
     }
 }

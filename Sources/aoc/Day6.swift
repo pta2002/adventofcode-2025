@@ -1,4 +1,4 @@
-class Day6 {
+class Day6: Day {
     enum Operation {
         case add, multiply
     }
@@ -18,7 +18,7 @@ class Day6 {
     let columns1: [Column]
     let columns2: [Column]
 
-    init(input: String) {
+    required init(input: String) {
         let lines = input.split(separator: .newlineSequence)
         let operations = lines.last!.matches(of: /(\*|\+)\s+/).map {
             let op =

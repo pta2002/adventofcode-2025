@@ -1,7 +1,7 @@
 import Foundation
 import RegexBuilder
 
-class Day1 {
+class Day1: Day {
     enum Movement {
         case left(Int)
         case right(Int)
@@ -14,25 +14,25 @@ class Day1 {
         }
     }
 
-    let matching = Regex {
-        Capture {
-            ChoiceOf {
-                "L"
-                "R"
+    let input: [Movement]
+
+    required init(input: String) {
+        let matching = Regex {
+            Capture {
+                ChoiceOf {
+                    "L"
+                    "R"
+                }
+            }
+            Capture {
+                OneOrMore(.digit)
+            } transform: {
+                Int($0)!
             }
         }
-        Capture {
-            OneOrMore(.digit)
-        } transform: {
-            Int($0)!
-        }
-    }
 
-    var dial = 50
-
-    func parse(input: String) throws -> [Movement] {
-        return try input.split(separator: "\n").map({ line in
-            let match = try matching.wholeMatch(in: String(line))!.output
+        self.input = input.split(separator: "\n").map({ line in
+            let match = try! matching.wholeMatch(in: String(line))!.output
             let (_, dir, num) = match
 
             switch dir {
@@ -43,15 +43,16 @@ class Day1 {
         })
     }
 
-    func move(movement: Movement) {
-        self.dial = (dial + movement.absolute()) % 100
+    func move(dial: Int, movement: Movement) -> Int {
+        return (dial + movement.absolute()) % 100
     }
 
-    func part1(input: [Movement]) -> Int {
+    var part1: Int {
         var counter = 0
+        var dial = 50
         for movement in input {
-            self.move(movement: movement)
-            if self.dial == 0 { counter += 1 }
+            dial = self.move(dial: dial, movement: movement)
+            if dial == 0 { counter += 1 }
         }
         return counter
     }
@@ -74,13 +75,13 @@ class Day1 {
         return counter
     }
 
-    func part2(input: [Movement]) -> Int {
-        self.dial = 50
+    var part2: Int {
+        var dial = 50
         var counter = 0
         for movement in input {
-            counter += crossesZero(dial: self.dial, movement: movement)
-            self.dial += movement.absolute()
-            self.dial = (1_000_000 + self.dial) % 100
+            counter += crossesZero(dial: dial, movement: movement)
+            dial += movement.absolute()
+            dial = (1_000_000 + dial) % 100
         }
         return counter
     }

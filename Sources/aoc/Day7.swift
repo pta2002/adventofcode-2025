@@ -1,8 +1,8 @@
-class Day7 {
+class Day7: Day {
     let start: Int
     let splits: [Set<Int>]
 
-    init(input: String) {
+    required init(input: String) {
         var foundStart: Int = 0
         var foundSplits: [Set<Int>] = []
         for (y, line) in input.split(separator: .newlineSequence).enumerated() {

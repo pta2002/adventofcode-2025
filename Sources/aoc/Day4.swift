@@ -1,4 +1,4 @@
-class Day4 {
+class Day4: Day {
     struct Coordinates: Hashable, Equatable {
         let x: Int
         let y: Int
@@ -6,7 +6,7 @@ class Day4 {
 
     let map: [Coordinates: Int]
 
-    init(input: String) {
+    required init(input: String) {
         var tmp: Set<Coordinates> = []
         for (y, line) in input.split(separator: .newlineSequence).enumerated() {
             for (x, char) in line.unicodeScalars.enumerated() {

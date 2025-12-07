@@ -1,6 +1,6 @@
 import RegexBuilder
 
-class Day2 {
+class Day2: Day {
     let input: [ClosedRange<Int>]
 
     let p1_regex = Regex {
@@ -21,7 +21,7 @@ class Day2 {
         Anchor.endOfLine
     }
 
-    init(input: String) {
+    required init(input: String) {
         self.input = input.split(separator: ",").map { range in
             let split = range.split(separator: "-")
             let start = Int(split[0].trimmingCharacters(in: .whitespacesAndNewlines))!

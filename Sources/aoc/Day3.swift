@@ -1,9 +1,9 @@
 import Foundation
 
-class Day3 {
+class Day3: Day {
     let input: [[Int]]
 
-    init(input: String) {
+    required init(input: String) {
         self.input = input.split(separator: .newlineSequence).map { line in
             line.unicodeScalars.map({ Int(String($0))! })
         }

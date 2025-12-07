@@ -1,8 +1,8 @@
-class Day5 {
+class Day5: Day {
     let ranges: [ClosedRange<Int>]
     let availableIds: [Int]
 
-    init(input: String) {
+    required init(input: String) {
         let split = input.split(separator: "\n\n")
         let ranges = split[0].split(separator: .newlineSequence).map { s in
             let rangeComponents = s.split(separator: "-")
