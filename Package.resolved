@@ -1,5 +1,5 @@
 {
-  "originHash" : "28131d5990db706f3b85ab42259dd69a9a0d17d6c10cbc4d14da92fdacbc2008",
+  "originHash" : "c3f07428a75442124ba4bd7e74ee018da222e0831b29074a678566098ec498e9",
   "pins" : [
     {
       "identity" : "swift-argument-parser",
@@ -8,6 +8,15 @@
       "state" : {
         "revision" : "cdd0ef3755280949551dc26dee5de9ddeda89f54",
         "version" : "1.6.2"
+      }
+    },
+    {
+      "identity" : "swift-z3",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/LuizZak/swift-z3.git",
+      "state" : {
+        "branch" : "master",
+        "revision" : "872e516feb689f17a2fcd5fe32b344dabdb9074b"
       }
     }
   ],

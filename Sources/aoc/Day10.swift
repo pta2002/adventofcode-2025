@@ -1,4 +1,5 @@
 import RegexBuilder
+import SwiftZ3
 
 class Day10: Day {
     struct Machine {
@@ -132,5 +133,40 @@ class Day10: Day {
         return counter
     }
 
-    var part2: Int { 0 }
+    var part2: Int {
+        let config = Z3Config()
+        let context = Z3Context(configuration: config)
+
+        var total = 0
+
+        for machine in machines {
+            let opt = context.makeOptimize()
+            let buttonVars = machine.buttons.enumerated().map {
+                context.makeConstant(name: "Button \($0.0)", sort: IntSort.self)
+            }
+
+            buttonVars.forEach { opt.assert($0 >= 0) }
+
+            for (i, target) in machine.requirements.enumerated() {
+                var sum = context.makeInteger(0)
+                for (btn_i, button) in machine.buttons.enumerated() {
+                    if button.contains(i) {
+                        sum = sum + buttonVars[btn_i]
+                    }
+                }
+
+                opt.assert(sum == Int32(target))
+            }
+
+            let totalButtonPresses = buttonVars.reduce(context.makeInteger(0), +)
+            let _ = opt.minimize(totalButtonPresses)
+            assert(opt.check() == .satisfiable)
+
+            let model = opt.getModel()
+            let result = model.eval(totalButtonPresses, completion: true)
+            total += Int(result!.numeralInt)
+        }
+
+        return total
+    }
 }
